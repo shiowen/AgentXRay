@@ -1,0 +1,78 @@
+{
+    "Code":{
+        "leader_prompt":[
+            "Each role profile needs to follow the following format, where the following tokens must be replaced such that \"ROLENAME\" is the role's occupation name without any modifiers such as **, \"PROMPT\" is the result of summarizing the description of this role into a prompt, \"TYPE\" is used to indicate whether the role requires coding(code means coding is required, and non-code means it is not.). Format:",
+            "----------",
+            "```ROLENAME",
+            "PROMPT",
+            "TYPE",
+            "```",
+            "----------",
+            "Additionally, you need to determine if the team requires adding roles that use tools. Currently, the supported tools in the code domain are:",
+            "1. Correctness Check: This tool executes the code using a compiler to detect any issues or errors.",
+            "2. Pass Content Check: This tool checks if the code contains 'pass' or similar content.",
+            "If any of these tools are required, please add the appropriate role to the task.",
+            "Each tool-use role profile needs to follow the following format, where the following tokens must be replaced such that \"ROLENAME\" with the role's occupation name without any modifiers, \"TOOLTYPE\" is the tool type used by the role(1 for Correctness Check and 2 for Pass Content Check), \"TOOL\" is \"TOOL\". Format:",
+            "----------",
+            "```ROLENAME",
+            "TOOLTYPE",
+            "TOOL",
+            "```",
+            "----------"
+        ],
+        "actor_init_prompt":{
+            "code": [
+               "You are an expert Python programmer. Your task is to implement a complete, multi-file software solution.",
+                "Your output MUST be structured in two distinct parts: a Plan, and the Code.",
+                "First, provide the plan inside a <plan> block. List all files you will create.",
+                "Then, provide the code inside a <code> block.",
+                "**CRITICAL OUTPUT FORMAT**: Inside the <code> block, each file MUST start with its filename on a new line, followed IMMEDIATELY by a Python markdown code block. DO NOT add any extra text between the filename and the code block.",
+
+                "**EXAMPLE START**",
+                "<plan>",
+                "- `main.py`: Main entry point.",
+                "- `utils.py`: Helper functions.",
+                "</plan>",
+                "<code>",
+                "main.py",
+                "```python",
+                "import utils",
+                "print(utils.get_greeting())",
+                "```",
+                "utils.py",
+                "```python",
+                "def get_greeting():",
+                "    return 'Hello from utils!'",
+                "```",
+                "</code>",
+                "**EXAMPLE END**",
+
+                "Now, generate the complete plan and functional code for all required files."
+],
+
+            "non-code":[
+                "Think step by step.",
+                "Finally give a summary report, ensuring that the summary is enclosed within <summary> and </summary> tags."
+            ]
+        },
+        "actor_prompt":{
+            "code":[
+                "You only need to modify existing code within the scope of your role and according to the task.",
+                "In the software, each file must strictly follow a markdown code block format, where the following tokens must be replaced such that \"FILENAME\" is the lowercase file name including the file extension, \"LANGUAGE\" in the programming language, \"DOCSTRING\" is a string literal specified in source code that is used to document a specific segment of code, and \"CODE\" is the original code. Format:",
+                "----------",
+                "FILENAME",
+                "```LANGUAGE",
+                "'''",
+                "DOCSTRING",
+                "'''",
+                "CODE",
+                "```",
+                "----------"
+            ],
+            "non-code":[
+                "Think step by step.",
+                "Finally give a summary report, ensuring that the summary is enclosed within <summary> and </summary> tags."
+            ]
+        }
+    }
+}

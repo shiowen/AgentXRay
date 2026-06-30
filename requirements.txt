@@ -1,0 +1,12 @@
+ddgs
+flake8
+openai
+pipreqs
+pycodestyle
+pyflakes
+pytest
+pyyaml
+regex
+scikit-learn
+tenacity
+tiktoken

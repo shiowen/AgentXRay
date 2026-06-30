@@ -1,0 +1,54 @@
+{
+  "models": [
+    {
+      "name": "claude-sonnet-4-20250514",
+      "description": "Claude Sonnet 4 - Excellent for complex code generation and tool creation",
+      "token_cost": "high",
+      "speed": "medium",
+      "best_for": "complex reasoning, code refactoring",
+      "context_length": "200k tokens",
+      "reasoning_capability": "excellent",
+      "tool_generation_priority": 2
+    },
+    {
+      "name": "gpt-4-turbo",
+      "description": "Advanced model for complex reasoning, architecture design, and code refactoring",
+      "token_cost": "high",
+      "speed": "medium",
+      "best_for": "complex algorithms, system architecture, critical problem solving",
+      "context_length": "128k tokens"
+    },
+    {
+      "name": "gpt-4",
+      "description": "High-performance model for detailed analysis and comprehensive solutions",
+      "token_cost": "high", 
+      "speed": "medium",
+      "best_for": "detailed code analysis, comprehensive documentation, complex debugging",
+      "context_length": "128k tokens"
+    },
+    {
+      "name": "gpt-3.5-turbo-16k",
+      "description": "Balanced model for code generation, debugging, and feature development",
+      "token_cost": "medium",
+      "speed": "fast",
+      "best_for": "feature development, bug fixing, code optimization, general programming",
+      "context_length": "16k tokens"
+    },
+    {
+      "name": "gpt-3.5-turbo",
+      "description": "Fast model for simple code generation and basic programming tasks",
+      "token_cost": "low",
+      "speed": "very fast", 
+      "best_for": "simple functions, basic algorithms, code formatting, quick fixes",
+      "context_length": "4k tokens"
+    },
+    {
+      "name": "gpt-4o-mini",
+      "description": "Lightweight model for rapid code generation and simple logic processing",
+      "token_cost": "very low",
+      "speed": "very fast",
+      "best_for": "simple code generation, unit tests, code completion, basic utilities",
+      "context_length": "128k tokens"
+    }
+  ]
+}

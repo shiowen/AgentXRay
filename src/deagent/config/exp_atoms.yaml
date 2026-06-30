@@ -1,0 +1,22 @@
+model:
+  openai_api_key: ""
+  base_url: ""
+  max_retry_number: 10
+  
+dynamic_selection:
+  enable_model_selection: true
+  enable_reasoning_patterns: true
+  model_library_path: 'src/deagent/config/model_library_atoms.json'
+  reasoning_patterns_path: 'src/deagent/config/reasoning_patterns.json'
+  fallback:
+    default_model: 'deepseek-v3.2'
+    default_reasoning: 'reasoning'
+
+mcts_tree:
+  max_child_number: 12
+  max_depth: 5
+  enable_coloring: true
+
+ablation:
+  agent_only: false
+  minimal_tool_pool: false

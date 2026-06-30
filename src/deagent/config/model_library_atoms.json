@@ -1,0 +1,36 @@
+{
+  "models": [
+    {
+      "name": "llama-4-maverick-17b-128e-instruct",
+      "description": "Meta's specialized high-performance model for instruction following",
+      "token_cost": "medium",
+      "speed": "medium",
+      "best_for": "complex tasks, python implementation",
+      "context_length": "128k tokens"
+    },
+    {
+      "name": "deepseek-v3.2",
+      "description": "State-of-the-art coding and reasoning model from DeepSeek",
+      "token_cost": "low",
+      "speed": "fast",
+      "best_for": "algorithm implementation, complex logic",
+      "context_length": "128k tokens"
+    },
+    {
+      "name": "qwen3-coder-30b-a3b-instruct",
+      "description": "Optimized Qwen3 model specifically for coding tasks",
+      "token_cost": "medium",
+      "speed": "fast",
+      "best_for": "code generation, system design",
+      "context_length": "128k tokens"
+    },
+    {
+      "name": "glm-4.7",
+      "description": "Latest generation GLM model with improved coding capability",
+      "token_cost": "medium",
+      "speed": "medium",
+      "best_for": "comprehensive code generation",
+      "context_length": "128k tokens"
+    }
+  ]
+}

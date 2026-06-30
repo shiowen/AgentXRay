@@ -1,0 +1,44 @@
+{
+  "patterns": [
+    {
+      "name": "reasoning",
+      "description": "Step-by-step logical analysis and problem decomposition",
+      "suitable_for": "complex problems, algorithm design, systematic analysis"
+    },
+    {
+      "name": "critique", 
+      "description": "Critical analysis, evaluation, and assessment of existing solutions",
+      "suitable_for": "code review, quality assessment, identifying weaknesses"
+    },
+    {
+      "name": "reflect",
+      "description": "Self-reflection and iterative improvement of solutions",
+      "suitable_for": "optimization, debugging, continuous improvement"
+    },
+    {
+      "name": "question",
+      "description": "Question-driven exploration and requirement analysis",
+      "suitable_for": "requirement gathering, problem clarification, exploratory analysis"
+    },
+    {
+      "name": "summarize",
+      "description": "Information synthesis and concise summary generation",
+      "suitable_for": "documentation, reporting, information consolidation"
+    },
+    {
+      "name": "conclude",
+      "description": "Decision making and conclusion drawing from available information",
+      "suitable_for": "final decisions, recommendations, solution selection"
+    },
+    {
+      "name": "modify",
+      "description": "Adaptive modification and improvement of existing solutions",
+      "suitable_for": "refactoring, enhancement, bug fixing"
+    },
+    {
+      "name": "planning",
+      "description": "Strategic planning and systematic approach to problem solving",
+      "suitable_for": "project planning, architecture design, workflow organization"
+    }
+  ]
+}

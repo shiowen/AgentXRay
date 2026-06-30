@@ -1,0 +1,74 @@
+model:
+  openai_api_key: ""
+  base_url: ""
+
+  max_retry_number: 10
+  # New: default max completion tokens for code generation. Increase this to reduce truncation.
+  # Can be overridden by env var MAX_TOKENS.
+  max_tokens: 8192
+
+log:
+  log_dir: 'ProjectCodeWithColors'
+
+# Problem-oriented search enhancement.
+problem_oriented_enhancement:
+  enable_enhanced_ucb: true
+  potential_weight: 0.3
+  similarity_threshold: 0.3
+  max_potential_boost: 2.0
+  problem_parsing_enabled: true
+  debug_mode: true
+
+# Dynamic model and reasoning selection.
+dynamic_selection:
+  enable_model_selection: true
+  enable_reasoning_patterns: true
+  model_library_path: 'config/model_library.json'
+  reasoning_patterns_path: 'config/reasoning_patterns.json'
+  selection_strategy:
+    consider_budget: true
+    prefer_quality: false
+    max_cost_level: 'high'
+    fallback_enabled: true
+  selection_guidance:
+    require_reasoning: true
+    max_reasoning_patterns: 2
+    allow_model_override: false
+  monitoring:
+    log_selections: true
+    track_performance: true
+    cost_tracking: true
+  fallback:
+    default_model: 'gpt-3.5-turbo-16k'
+    default_reasoning: 'reasoning'
+    on_parse_error: 'use_defaults'
+    max_retry_attempts: 2
+  experimental:
+    adaptive_selection: false
+    load_balancing: false
+    cost_optimization: false
+
+mcts_tree:
+  max_child_number: 16
+  max_depth: 6
+  new_ucb_weight: 10
+  beta: 0.5
+  # Control the Agent/Tool expansion balance.
+  min_agent_ratio: 0.4
+  max_tools_per_node: 10
+  sim_agent_bias: 0.55
+  # Enable or disable red/black tree coloring.
+  enable_coloring: false
+
+ablation:
+  # Set to true or export AGENT_ONLY=1 to disable all Tool node expansions (Agent-only ablation)
+  agent_only: true
+  # Set to true or export MINIMAL_TOOL_POOL=1 to enable minimal useful tool pool ablation
+  minimal_tool_pool: true
+  # Define minimal tool pool (used when minimal_tool_pool=true and agent_only=false)
+  minimal_tool_set:
+    - syntax_error_checker
+    - undefined_name_checker
+    - dependency_extractor
+    - code_summarizer
+    - test_runner

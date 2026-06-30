@@ -1,0 +1,16 @@
+model:
+  openai_api_key: ""
+  base_url: ""
+  max_retry_number: 10
+  
+dynamic_selection:
+  enable_model_selection: true
+  model_library_path: 'src/deagent/config/model_library_atoms.json'
+  reasoning_patterns_path: 'src/deagent/config/reasoning_patterns.json'
+
+mcts_tree:
+  enable_coloring: true
+
+ablation:
+  agent_only: true
+  minimal_tool_pool: false

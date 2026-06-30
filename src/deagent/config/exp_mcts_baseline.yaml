@@ -1,0 +1,28 @@
+# Baseline MCTS-only experiment config
+# Goal: remove tools, red/black coloring pruning, and agent-profile diversity heuristics.
+# Usage:
+#   MCTS_BASELINE=1 python run_experiment.py --config src/deagent/config/exp_mcts_baseline.yaml --run-id mcts_baseline_xxx
+
+model:
+  openai_api_key: ""
+  base_url: ""
+  max_retry_number: 10
+
+log:
+  log_dir: 'ProjectCodeWithColors'
+
+problem_oriented_enhancement:
+  enable_enhanced_ucb: false
+
+mcts_tree:
+  max_child_number: 16
+  max_depth: 6
+  new_ucb_weight: 10
+  beta: 0.5
+  # Disable red/black coloring
+  enable_coloring: false
+
+ablation:
+  # No tool expansions
+  agent_only: false
+  minimal_tool_pool: false

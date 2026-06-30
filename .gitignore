@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environments and local secrets
+.env
+.venv/
+venv/
+env/
+
+# Local IDE/system files
+.DS_Store
+.idea/
+.vscode/
+
+# Runtime artifacts
+data/
+outputs/
+**/outputs/
+logs/
+**/logs/
+eval_outputs/
+eval_outputs_safe/
+codes/
+**/codes/
+*.log
+*.db
+*.sqlite
+*.sqlite3
+*.pkl
+
+# Large model/checkpoint files
+llama31/
+checkpoints/
+*.safetensors
+*.pth
+*.pt
