@@ -14,6 +14,7 @@ SRC_ROOT = os.path.join(REPO_ROOT, "src")
 sys.path.insert(0, SRC_ROOT)
 
 from deagent.config import config
+from deagent.cli import _dataset_spec_for_name
 from deagent.reporting import SafeJSONEncoder, safe_json_dump, sanitize_report_data
 from deagent.tools.path_utils import safe_join
 import deagent.utils.codes as codes_module
@@ -212,6 +213,35 @@ class TestConfigLoading(unittest.TestCase):
         self.assertGreater(max_depth, 0)
         self.assertLess(max_children, 100)
         self.assertLess(max_depth, 50)
+
+
+class TestDatasetCLI(unittest.TestCase):
+    def test_builtin_dataset_spec_uses_known_split_files(self):
+        spec = _dataset_spec_for_name("maps")
+
+        self.assertEqual(spec.directory, "maps")
+        self.assertEqual(spec.train_file, "train_alpaca.json")
+        self.assertEqual(spec.test_file, "test_alpaca.json")
+
+    def test_custom_dataset_defaults_to_train_and_test_json(self):
+        spec = _dataset_spec_for_name("my_dataset")
+
+        self.assertEqual(spec.directory, "my_dataset")
+        self.assertEqual(spec.train_file, "train.json")
+        self.assertEqual(spec.test_file, "test.json")
+
+    def test_custom_dataset_accepts_split_overrides(self):
+        spec = _dataset_spec_for_name("my_dataset", "train_alpaca.json", "eval.json")
+
+        self.assertEqual(spec.train_file, "train_alpaca.json")
+        self.assertEqual(spec.test_file, "eval.json")
+
+    def test_dataset_path_cannot_escape_data_root(self):
+        with self.assertRaises(ValueError):
+            _dataset_spec_for_name("../outside")
+
+        with self.assertRaises(ValueError):
+            _dataset_spec_for_name("my_dataset", "../train.json", "test.json")
 
 
 class TestLoggingSystem(unittest.TestCase):

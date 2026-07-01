@@ -33,6 +33,9 @@ DATASETS = {
     "metagpt": DatasetSpec("metagpt", "train.json", "test.json"),
 }
 
+DEFAULT_CUSTOM_TRAIN_FILE = "train.json"
+DEFAULT_CUSTOM_TEST_FILE = "test.json"
+
 
 def _repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
@@ -41,6 +44,25 @@ def _repo_root() -> Path:
 def _resolve_repo_path(path: str, repo_root: Path) -> Path:
     resolved = Path(path)
     return resolved if resolved.is_absolute() else repo_root / resolved
+
+
+def _validate_relative_path(value: str, argument_name: str) -> None:
+    path = Path(value)
+    if path.is_absolute() or ".." in path.parts:
+        raise ValueError(f"{argument_name} must be relative and cannot contain '..'.")
+
+
+def _dataset_spec_for_name(dataset: str, train_file: str = "", test_file: str = "") -> DatasetSpec:
+    _validate_relative_path(dataset, "--dataset")
+    base_spec = DATASETS.get(
+        dataset,
+        DatasetSpec(dataset, DEFAULT_CUSTOM_TRAIN_FILE, DEFAULT_CUSTOM_TEST_FILE),
+    )
+    train_filename = train_file or base_spec.train_file
+    test_filename = test_file or base_spec.test_file
+    _validate_relative_path(train_filename, "--train-file")
+    _validate_relative_path(test_filename, "--test-file")
+    return DatasetSpec(base_spec.directory, train_filename, test_filename)
 
 
 def _make_run_id(dataset: str, provided_run_id: str = "") -> str:
@@ -56,9 +78,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run an AgentXRay train/test experiment.")
     parser.add_argument(
         "--dataset",
-        choices=sorted(DATASETS),
         default="metagpt",
-        help="Dataset split to use.",
+        help=(
+            "Dataset name or custom dataset directory under --data-root. "
+            f"Built-in names: {', '.join(sorted(DATASETS))}."
+        ),
     )
     parser.add_argument(
         "--iterations",
@@ -83,6 +107,16 @@ def build_parser() -> argparse.ArgumentParser:
         "--run-id",
         default="",
         help="Optional output subdirectory name under outputs/<log_dir>/.",
+    )
+    parser.add_argument(
+        "--train-file",
+        default="",
+        help="Training split filename. Defaults to the built-in mapping or train.json.",
+    )
+    parser.add_argument(
+        "--test-file",
+        default="",
+        help="Test split filename. Defaults to the built-in mapping or test.json.",
     )
     parser.add_argument(
         "--train-samples",
@@ -147,7 +181,10 @@ def main(argv: list[str] | None = None) -> int:
 
     repo_root = _repo_root()
     config_path = _resolve_repo_path(args.config, repo_root)
-    spec = DATASETS[args.dataset]
+    try:
+        spec = _dataset_spec_for_name(args.dataset, args.train_file, args.test_file)
+    except ValueError as exc:
+        parser.error(str(exc))
     data_root = _resolve_repo_path(args.data_root, repo_root)
     data_path = data_root / spec.directory
     _validate_inputs(config_path, data_path, spec)

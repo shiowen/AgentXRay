@@ -118,9 +118,23 @@ Runtime outputs are ignored by git.
 
 ## Datasets
 
-Datasets are stored separately from this code repository. Download the AgentXRay dataset package from the project dataset page, then either:
+Datasets are stored separately from this code repository. You can use the official AgentXRay datasets or bring your own dataset with the same JSON schema.
 
-1. Place it under a local `data/` directory inside this repository, or
+Official dataset package:
+
+[shiowen/AgentXRay-Datasets](https://huggingface.co/datasets/shiowen/AgentXRay-Datasets)
+
+Download with the Hugging Face CLI:
+
+```bash
+hf download shiowen/AgentXRay-Datasets \
+  --type dataset \
+  --local-dir AgentXRay_Datasets
+```
+
+Then either:
+
+1. Place the downloaded `data/` directory inside this repository, or
 2. Keep it outside the code checkout and pass `--data-root /path/to/AgentXRay_Datasets/data`.
 
 You can also set the environment variable once:
@@ -129,7 +143,7 @@ You can also set the environment variable once:
 export AGENTXRAY_DATA_ROOT="/path/to/AgentXRay_Datasets/data"
 ```
 
-Available dataset names for `--dataset`:
+Built-in dataset names for `--dataset`:
 
 - `atoms`
 - `chatdev`
@@ -139,7 +153,7 @@ Available dataset names for `--dataset`:
 - `maps`
 - `metagpt`
 
-The expected local layout is:
+The official dataset layout is:
 
 ```text
 <data-root>/
@@ -152,7 +166,60 @@ The expected local layout is:
 └── metagpt/
 ```
 
-Recommended dataset hosting:
+### Custom Datasets
+
+Custom dataset directories are supported. By default, AgentXRay expects:
+
+```text
+<data-root>/<dataset-name>/train.json
+<data-root>/<dataset-name>/test.json
+```
+
+Run a custom dataset:
+
+```bash
+python run_experiment.py \
+  --dataset my_dataset \
+  --data-root /path/to/my_data_root \
+  --iterations 20 \
+  --run-id my_dataset_run
+```
+
+If your split files use different names, pass them explicitly:
+
+```bash
+python run_experiment.py \
+  --dataset my_dataset \
+  --data-root /path/to/my_data_root \
+  --train-file train_alpaca.json \
+  --test-file eval_alpaca.json \
+  --iterations 20 \
+  --run-id my_dataset_run
+```
+
+Raw-format files should contain a JSON list of objects:
+
+```json
+{
+  "folder_name": "example_id",
+  "input": "task description",
+  "output": "reference output or structured project output"
+}
+```
+
+Alpaca-format files are also accepted:
+
+```json
+{
+  "instruction": "task description",
+  "input": "",
+  "output": "reference output"
+}
+```
+
+Structured outputs may include fields such as `code_files`, `docs`, `configs`, `logs`, and `requirements`.
+
+Recommended dataset hosting for derivatives:
 
 - Hugging Face Datasets for convenient browsing, versioning, and direct downloads.
 - Zenodo for DOI-backed archival snapshots.
